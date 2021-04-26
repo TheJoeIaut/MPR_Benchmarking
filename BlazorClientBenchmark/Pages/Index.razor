@@ -1,0 +1,80 @@
+﻿@page "/"
+@using Tests
+@using Tests.Abstraction
+
+@inject IJSRuntime Js
+<h1>Benchmark</h1>
+
+<button @onclick="BinaryTrees">BinaryTrees</button>
+<button @onclick="Fannkuchen">Fannkuchen</button>
+<button @onclick="Mandelbrot">Mandelbrot</button>
+<button @onclick="RegexRedux">RegexRedux</button>
+<button @onclick="SpectralNorm">SpectralNorm</button>
+<button @onclick="PiDigits">PiDigits</button>
+<button @onclick="NBody">NBody</button>
+<button @onclick="Communication">Communication</button>
+
+
+
+<p>Current count: @currentCount</p>
+
+
+@code {
+    private int currentCount = 0;
+
+
+    public async Task BinaryTrees()
+    {
+        await TriggerNetInstanceMethod(new BinaryTrees(), Enumerable.Range(15,1).ToList());
+    }
+
+    public async Task Fannkuchen()
+    {
+        await TriggerNetInstanceMethod(new Tests.Fannkuchen(), Enumerable.Range(9, 1).ToList());
+    }
+
+    public async Task Mandelbrot()
+    {
+        await TriggerNetInstanceMethod(new Tests.Mandelbrot(), Enumerable.Range(1, 1).Select(x => x * 1000).ToList());
+    }
+    public void RegexRedux()
+    {
+
+    }
+    public void SpectralNorm()
+    {
+
+    }
+    public async Task PiDigits()
+    {
+        await TriggerNetInstanceMethod(new Tests.PiDigits(), Enumerable.Range(5, 1).Select(x => 100 * x).ToList());
+    }
+
+    public async Task NBody()
+    {
+        await TriggerNetInstanceMethod(new Tests.Nbody(), Enumerable.Range(1, 1).Select(x => 100000* x).ToList());
+    }
+
+    public async Task Communication()
+    {
+        await TriggerNetInstanceMethod(new Tests.Communcation(), Enumerable.Range(5, 1).Select(x => 1000 * x).ToList());
+    }
+    private DotNetObjectReference<BlazorTestRunnerHelper> _objRef;
+
+    public async Task TriggerNetInstanceMethod(IPerfTest test, List<int> inputs )
+    {
+        //_objRef = DotNetObjectReference.Create(new BlazorTestRunnerHelper(Js, test, inputs));
+
+        //return Js.InvokeAsync<string>("sayHello", _objRef, 5);
+
+
+        var helper = new BlazorTestRunnerHelper(Js, test, inputs);
+        await helper.RunTest();
+        await helper.Finish();
+    }
+
+    public void Dispose()
+    {
+        _objRef?.Dispose();
+    }
+}

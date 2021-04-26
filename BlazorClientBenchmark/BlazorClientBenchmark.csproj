@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <UserSecretsId>e1bc1f25-6e09-4d56-9c41-9a9fb38b0022</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tests\Tests.csproj" />
+  </ItemGroup>
+</Project>

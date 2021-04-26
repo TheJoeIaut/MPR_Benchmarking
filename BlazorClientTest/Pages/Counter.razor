@@ -1,0 +1,21 @@
+﻿@page "/counter"
+@using System.Diagnostics
+@using Tests
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="DoTest">Click me</button>
+
+@functions {
+    private int currentCount = 0;
+
+    private void DoTest()
+    {
+        Stopwatch watch = Stopwatch.StartNew();
+        Fannkuchen.Run(10);
+        
+        Console.WriteLine(watch.Elapsed);
+    }
+}
